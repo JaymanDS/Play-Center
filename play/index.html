@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Center - Spelletjesplatform</title>
+    <title>Game Player - Play Center</title>
     <style>
         * {
             margin: 0;
@@ -15,302 +15,410 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
         }
 
-        header {
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        nav {
-            background: rgba(0, 0, 0, 0.5);
+        .game-container {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
         }
 
-        nav a {
+        .game-header {
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        nav a:hover {
-            color: #667eea;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .game-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .game-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-        }
-
-        .game-info {
             padding: 1.5rem;
-        }
-
-        .game-info h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .game-info p {
-            color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .game-meta {
+            border-radius: 15px 15px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: #999;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .game-rating {
-            color: #f39c12;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .play-button {
-            width: 100%;
-            padding: 0.75rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .back-button {
+            padding: 0.5rem 1rem;
+            background: #667eea;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .play-button:hover {
-            opacity: 0.9;
-        }
-
-        .featured {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            text-align: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .featured h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .featured-button {
+            font-weight: 600;
+            transition: background 0.3s;
+            text-decoration: none;
             display: inline-block;
-            margin-top: 1rem;
-            padding: 0.75rem 2rem;
-            background: white;
-            color: #f5576c;
+        }
+
+        .back-button:hover {
+            background: #764ba2;
+        }
+
+        .game-title {
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .controls-button {
+            padding: 0.5rem 1rem;
+            background: #667eea;
+            color: white;
             border: none;
             border-radius: 8px;
-            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s;
+            font-weight: 600;
+            transition: background 0.3s;
         }
 
-        .featured-button:hover {
-            transform: scale(1.05);
+        .controls-button:hover {
+            background: #764ba2;
         }
 
-        footer {
-            background: rgba(0, 0, 0, 0.7);
+        .controls-button.active {
+            background: #f39c12;
+        }
+
+        .game-wrapper {
+            background: #000;
+            border-radius: 0 0 15px 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            min-height: 600px;
+        }
+
+        .game-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+        }
+
+        .side-panel {
+            background: rgba(255, 255, 255, 0.95);
+            width: 300px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .side-panel.active {
+            display: block;
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+        }
+
+        .panel-section h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            color: #333;
+        }
+
+        .controls-list {
+            list-style: none;
+        }
+
+        .controls-list li {
+            padding: 0.5rem 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+
+        .controls-list li:last-child {
+            border-bottom: none;
+        }
+
+        .fullscreen-button {
+            padding: 0.5rem 1rem;
+            background: #667eea;
             color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .fullscreen-button:hover {
+            background: #764ba2;
+        }
+
+        .footer-info {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
             text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
         }
 
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
+            .game-header {
+                flex-direction: column;
+                text-align: center;
             }
 
-            .games-grid {
-                grid-template-columns: 1fr;
+            .game-title {
+                font-size: 1.5rem;
             }
 
-            nav {
-                gap: 1rem;
+            .game-wrapper {
+                flex-direction: column;
+                min-height: 400px;
             }
+
+            .side-panel {
+                width: 100%;
+                max-height: 300px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Fullscreen styles */
+        .game-wrapper.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            z-index: 9999;
+        }
+
+        .game-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            z-index: 9998;
+        }
+
+        .game-header.fullscreen-hidden {
+            display: none;
+        }
+
+        .exit-fullscreen-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.75rem 1.5rem;
+            background: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 10000;
+            display: none;
+        }
+
+        .exit-fullscreen-button.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>🎮 Play Center</h1>
-        <p>Je favoriete spelletjesplatform</p>
-    </header>
+    <button class="exit-fullscreen-button" id="exitFullscreenBtn" onclick="exitFullscreen()">✕ Volledig Scherm Sluiten</button>
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#games">Spelletjes</a>
-        <a href="#trending">Trending</a>
-        <a href="../../login/embed/index.html">Inloggen</a>
-    </nav>
-
-    <div class="container">
-        <div class="featured">
-            <h2>🌟 Featured Game</h2>
-            <p>Speel het nieuwste spelletje en rijd naar succes!</p>
-            <button class="featured-button">Nu Spelen</button>
+    <div class="game-container" id="gameContainer">
+        <div class="game-header" id="gameHeader">
+            <div class="header-left">
+                <a href="index.html" class="back-button">← Terug</a>
+                <div class="game-title" id="gameTitle">Game Player</div>
+            </div>
+            <div class="header-right">
+                <button class="controls-button" id="togglePanelBtn" onclick="togglePanel()">ⓘ Info</button>
+                <button class="controls-button" onclick="toggleFullscreen()">⛶ Volledig Scherm</button>
+            </div>
         </div>
 
-        <h2 style="color: white; margin-bottom: 1.5rem;">Alle Spelletjes</h2>
-
-        <div class="games-grid" id="games">
-            <!-- Eagelcraft Card -->
-            <div class="game-card">
-                <div class="game-image">⛏️</div>
-                <div class="game-info">
-                    <h2>Eagelcraft</h2>
-                    <p>Bouw en verken oneindige werelden. Een klassieke mining en crafting ervaring!</p>
-                    <div class="game-meta">
-                        <span class="game-rating">⭐ 4.8/5</span>
-                        <span>👥 1.2M</span>
+        <div class="game-wrapper" id="gameWrapper">
+            <iframe class="game-frame" id="gameFrame" src="" allowfullscreen></iframe>
+            
+            <div class="side-panel" id="sidePanel">
+                <div class="panel-section">
+                    <h3>📊 Spelstatistieken</h3>
+                    <div class="stats-item">
+                        <span>Moeilijkheid:</span>
+                        <strong>Normaal</strong>
                     </div>
-                    <a href="game.html?game=eagelcraft" style="text-decoration: none;">
-                        <button class="play-button">Spelen</button>
-                    </a>
+                    <div class="stats-item">
+                        <span>FPS:</span>
+                        <strong id="fps">60</strong>
+                    </div>
+                    <div class="stats-item">
+                        <span>Speeltijd:</span>
+                        <strong id="playtime">00:00</strong>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Classic Games Card -->
-            <div class="game-card">
-                <div class="game-image">🎮</div>
-                <div class="game-info">
-                    <h2>Klassieke Games</h2>
-                    <p>Vermaak jezelf met tijdloze klassiekers als Snake, Tetris en meer!</p>
-                    <div class="game-meta">
-                        <span class="game-rating">⭐ 4.5/5</span>
-                        <span>👥 890K</span>
-                    </div>
-                    <button class="play-button">Spelen</button>
+                <div class="panel-section">
+                    <h3>⌨️ Bediening</h3>
+                    <ul class="controls-list">
+                        <li><strong>Pijltjestoetsen</strong> - Beweging</li>
+                        <li><strong>Spatiebalk</strong> - Springen/Actie</li>
+                        <li><strong>Muis</strong> - Kijken/Richten</li>
+                        <li><strong>ESC</strong> - Menu</li>
+                        <li><strong>F</strong> - Volledig scherm</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- Puzzle Card -->
-            <div class="game-card">
-                <div class="game-image">🧩</div>
-                <div class="game-info">
-                    <h2>Puzzel Avontuur</h2>
-                    <p>Los complexe puzzels op en test je logische denkvaardigheden!</p>
-                    <div class="game-meta">
-                        <span class="game-rating">⭐ 4.7/5</span>
-                        <span>👥 650K</span>
-                    </div>
-                    <button class="play-button">Spelen</button>
-                </div>
-            </div>
-
-            <!-- Racing Card -->
-            <div class="game-card">
-                <div class="game-image">🏎️</div>
-                <div class="game-info">
-                    <h2>Speed Racer</h2>
-                    <p>Rijd ultra snelle racewagens over spectaculaire circuits!</p>
-                    <div class="game-meta">
-                        <span class="game-rating">⭐ 4.6/5</span>
-                        <span>👥 1.5M</span>
-                    </div>
-                    <button class="play-button">Spelen</button>
-                </div>
-            </div>
-
-            <!-- Action Card -->
-            <div class="game-card">
-                <div class="game-image">⚔️</div>
-                <div class="game-info">
-                    <h2>Battle Arena</h2>
-                    <p>Vecht tegen spelers over de hele wereld in epische gevechten!</p>
-                    <div class="game-meta">
-                        <span class="game-rating">⭐ 4.4/5</span>
-                        <span>👥 2.1M</span>
-                    </div>
-                    <button class="play-button">Spelen</button>
-                </div>
-            </div>
-
-            <!-- Adventure Card -->
-            <div class="game-card">
-                <div class="game-image">🗺️</div>
-                <div class="game-info">
-                    <h2>Epic Quest</h2>
-                    <p>Begin aan een episch avontuur vol mysteries en schatkisten!</p>
-                    <div class="game-meta">
-                        <span class="game-rating">⭐ 4.9/5</span>
-                        <span>👥 980K</span>
-                    </div>
-                    <button class="play-button">Spelen</button>
+                <div class="panel-section">
+                    <h3>⚙️ Opties</h3>
+                    <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Volledig Scherm</button>
+                    <button class="fullscreen-button" style="background: #e74c3c; margin-top: 0.5rem;" onclick="resetGame()">🔄 Herstarten</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Play Center. Alle rechten voorbehouden.</p>
-        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Veel plezier met spelen! 🎉</p>
-    </footer>
+    <div class="footer-info">
+        <p>Play Center © 2026 | Veel plezier met spelen! 🎮</p>
+    </div>
+
+    <script>
+        let playtime = 0;
+        let isFullscreen = false;
+
+        // Get game from URL parameter
+        function getGameFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('game') || 'eagelcraft';
+        }
+
+        // Set game data
+        function setGameData(gameName) {
+            const gameData = {
+                'eagelcraft': {
+                    title: '⛏️ Eagelcraft',
+                    url: 'game/index.html'
+                },
+                'sample': {
+                    title: '🎮 Sample Game',
+                    url: 'https://example.com/game'
+                }
+            };
+
+            const game = gameData[gameName] || gameData['eagelcraft'];
+            document.getElementById('gameTitle').textContent = game.title;
+            document.getElementById('gameFrame').src = game.url;
+        }
+
+        // Toggle side panel
+        function togglePanel() {
+            const panel = document.getElementById('sidePanel');
+            const btn = document.getElementById('togglePanelBtn');
+            panel.classList.toggle('active');
+            btn.classList.toggle('active');
+        }
+
+        // Toggle fullscreen
+        function toggleFullscreen() {
+            isFullscreen = !isFullscreen;
+            const container = document.getElementById('gameContainer');
+            const wrapper = document.getElementById('gameWrapper');
+            const header = document.getElementById('gameHeader');
+            const exitBtn = document.getElementById('exitFullscreenBtn');
+
+            if (isFullscreen) {
+                container.classList.add('fullscreen');
+                wrapper.classList.add('fullscreen');
+                header.classList.add('fullscreen-hidden');
+                exitBtn.classList.add('active');
+            } else {
+                exitFullscreen();
+            }
+        }
+
+        // Exit fullscreen
+        function exitFullscreen() {
+            isFullscreen = false;
+            const container = document.getElementById('gameContainer');
+            const wrapper = document.getElementById('gameWrapper');
+            const header = document.getElementById('gameHeader');
+            const exitBtn = document.getElementById('exitFullscreenBtn');
+
+            container.classList.remove('fullscreen');
+            wrapper.classList.remove('fullscreen');
+            header.classList.remove('fullscreen-hidden');
+            exitBtn.classList.remove('active');
+        }
+
+        // Reset game
+        function resetGame() {
+            const frame = document.getElementById('gameFrame');
+            frame.src = frame.src;
+            playtime = 0;
+            updatePlaytime();
+        }
+
+        // Update playtime
+        function updatePlaytime() {
+            const minutes = Math.floor(playtime / 60);
+            const seconds = playtime % 60;
+            const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('playtime').textContent = timeStr;
+        }
+
+        // Update FPS (simulated)
+        function updateFPS() {
+            const fps = Math.floor(Math.random() * 20) + 55;
+            document.getElementById('fps').textContent = fps;
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            const game = getGameFromURL();
+            setGameData(game);
+
+            // Update playtime every second
+            setInterval(() => {
+                playtime++;
+                updatePlaytime();
+            }, 1000);
+
+            // Update FPS every 2 seconds
+            setInterval(updateFPS, 2000);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'f' || e.key === 'F') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+            if (e.key === 'Escape' && isFullscreen) {
+                exitFullscreen();
+            }
+        });
+    </script>
 </body>
 </html>
