@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Center - Spelletjesplatform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .game-info {
+            padding: 1.5rem;
+        }
+
+        .game-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .game-info p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .game-rating {
+            color: #f39c12;
+        }
+
+        .play-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .play-button:hover {
+            opacity: 0.9;
+        }
+
+        .featured {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .featured h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-button {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: white;
+            color: #f5576c;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .featured-button:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎮 Play Center</h1>
+        <p>Je favoriete spelletjesplatform</p>
+    </header>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#games">Spelletjes</a>
+        <a href="#trending">Trending</a>
+        <a href="../../login/embed/index.html">Inloggen</a>
+    </nav>
+
+    <div class="container">
+        <div class="featured">
+            <h2>🌟 Featured Game</h2>
+            <p>Speel het nieuwste spelletje en rijd naar succes!</p>
+            <button class="featured-button">Nu Spelen</button>
+        </div>
+
+        <h2 style="color: white; margin-bottom: 1.5rem;">Alle Spelletjes</h2>
+
+        <div class="games-grid" id="games">
+            <!-- Eagelcraft Card -->
+            <div class="game-card">
+                <div class="game-image">⛏️</div>
+                <div class="game-info">
+                    <h2>Eagelcraft</h2>
+                    <p>Bouw en verken oneindige werelden. Een klassieke mining en crafting ervaring!</p>
+                    <div class="game-meta">
+                        <span class="game-rating">⭐ 4.8/5</span>
+                        <span>👥 1.2M</span>
+                    </div>
+                    <a href="play?game=eagelcraft" style="text-decoration: none;"> 
+                        <button class="play-button">Spelen</button>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Classic Games Card -->
+            <div class="game-card">
+                <div class="game-image">🎮</div>
+                <div class="game-info">
+                    <h2>Klassieke Games</h2>
+                    <p>Vermaak jezelf met tijdloze klassiekers als Snake, Tetris en meer!</p>
+                    <div class="game-meta">
+                        <span class="game-rating">⭐ 4.5/5</span>
+                        <span>👥 890K</span>
+                    </div>
+                    <button class="play-button">Spelen</button>
+                </div>
+            </div>
+
+            <!-- Puzzle Card -->
+            <div class="game-card">
+                <div class="game-image">🧩</div>
+                <div class="game-info">
+                    <h2>Puzzel Avontuur</h2>
+                    <p>Los complexe puzzels op en test je logische denkvaardigheden!</p>
+                    <div class="game-meta">
+                        <span class="game-rating">⭐ 4.7/5</span>
+                        <span>👥 650K</span>
+                    </div>
+                    <button class="play-button">Spelen</button>
+                </div>
+            </div>
+
+            <!-- Racing Card -->
+            <div class="game-card">
+                <div class="game-image">🏎️</div>
+                <div class="game-info">
+                    <h2>Speed Racer</h2>
+                    <p>Rijd ultra snelle racewagens over spectaculaire circuits!</p>
+                    <div class="game-meta">
+                        <span class="game-rating">⭐ 4.6/5</span>
+                        <span>👥 1.5M</span>
+                    </div>
+                    <button class="play-button">Spelen</button>
+                </div>
+            </div>
+
+            <!-- Action Card -->
+            <div class="game-card">
+                <div class="game-image">⚔️</div>
+                <div class="game-info">
+                    <h2>Battle Arena</h2>
+                    <p>Vecht tegen spelers over de hele wereld in epische gevechten!</p>
+                    <div class="game-meta">
+                        <span class="game-rating">⭐ 4.4/5</span>
+                        <span>👥 2.1M</span>
+                    </div>
+                    <button class="play-button">Spelen</button>
+                </div>
+            </div>
+
+            <!-- Adventure Card -->
+            <div class="game-card">
+                <div class="game-image">🗺️</div>
+                <div class="game-info">
+                    <h2>Epic Quest</h2>
+                    <p>Begin aan een episch avontuur vol mysteries en schatkisten!</p>
+                    <div class="game-meta">
+                        <span class="game-rating">⭐ 4.9/5</span>
+                        <span>👥 980K</span>
+                    </div>
+                    <button class="play-button">Spelen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Play Center. Alle rechten voorbehouden.</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Veel plezier met spelen! 🎉</p>
+    </footer>
+</body>
+</html>
